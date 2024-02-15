@@ -1,3 +1,5 @@
+require("jesu42mate.set")
+require("jesu42mate.remaps")
 --[[
 
 =====================================================================
@@ -60,12 +62,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- [[ Configure plugins ]]
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
 
@@ -201,17 +197,17 @@ require('lazy').setup({
   },
 
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-    lazy = false,
-    config = function()
-      require('onedark').setup {
-        -- Set a style preset. 'dark' is default.
-        style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
-      }
-      require('onedark').load()
-    end,
+    ---- Theme inspired by Atom
+    --'navarasu/onedark.nvim',
+    --priority = 1000,
+    --lazy = false,
+    --config = function()
+    --  require('onedark').setup {
+    --    -- Set a style preset. 'dark' is default.
+    --    style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
+    --  }
+    --  require('onedark').load()
+    --end,
   },
 
   {
@@ -269,10 +265,27 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
-
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
+  {
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		requires = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-telescope/telescope.nvim" },
+		}
+	},
+  {
+		"nvim-tree/nvim-tree.lua",
+		dependencies = "nvim-tree/nvim-web-devicons",
+	},
+  {
+		"mbbill/undotree",
+		config = function()
+			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle);
+		end
+	},
+	{ "folke/trouble.nvim" },
+  { "github/copilot.vim" },
+  
   -- require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
 
@@ -282,9 +295,28 @@ require('lazy').setup({
   --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
+
+  -- This is importing what is returned from the lua/custom/init.lua
+  { {{{{import = 'custom.plugins'}}}} },
 }, {})
 
+-- HARPOON --
+local harpoon = require("harpoon")
+
+--REQUIRED
+harpoon:setup()
+
+vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end)
+vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+vim.keymap.set("n", "<C-m>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<C-s>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<C-a>", function() harpoon:list():select(4) end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -340,7 +372,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+vim.keymap.set('n', '<leader>diag', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -354,11 +386,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- [[ Configure Telescope ]]
+local telescope = require("telescope")
+local actions = require("telescope.actions")
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
     mappings = {
       i = {
+        ["<C-k>"] = actions.move_selection_previous,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-q>"] = actions.send_to_qflist,
         ['<C-u>'] = false,
         ['<C-d>'] = false,
       },
@@ -425,10 +462,10 @@ end
 vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]earch [/] in Open Files' })
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope' })
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>pf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>gp', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
@@ -494,15 +531,25 @@ vim.defer_fn(function()
           ['[]'] = '@class.outer',
         },
       },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['<leader>a'] = '@parameter.inner',
-        },
-        swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
-        },
+      {
+        "mbbill/undotree",
+        config = function()
+          vim.keymap.set("n", "<leader>po", vim.cmd.UndotreeToggle);
+        end
       },
+      {
+        "nvim-tree/nvim-tree.lua",
+        dependencies = "nvim-tree/nvim-web-devicons",
+      },
+      --swap = {
+      --  enable = true,
+      --  swap_next = {
+      --    ['<leader>a'] = '@parameter.inner',
+      --  },
+      --  swap_previous = {
+      --    ['<leader>A'] = '@parameter.inner',
+      --  },
+      --},
     },
   }
 end, 0)
@@ -645,8 +692,8 @@ cmp.setup {
     completeopt = 'menu,menuone,noinsert',
   },
   mapping = cmp.mapping.preset.insert {
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
@@ -679,6 +726,82 @@ cmp.setup {
     { name = 'path' },
   },
 }
+-- NVIM-TREE --
+require("nvim-tree").setup({
+	sort = {
+		sorter = "case_sensitive",
+	},
+	view = {
+		width = 25,
+	},
+	renderer = {
+		group_empty = true,
+		add_trailing = true,
+		indent_markers = {
+			enable = true,
+		},
+		icons = {
+			web_devicons = {
+				file = {
+					enable = true,
+				},
+			},
+			show = {
+				folder_arrow = false,
+			},
 
+		}
+	},
+	filters = {
+		dotfiles = false,
+	},
+	git = {
+		enable = false,
+	}
+})
+
+-- SETTINGS --
+vim.g.mapleader = " ";
+vim.opt.nu = true;
+vim.opt.relativenumber = true;
+vim.opt.hidden = true;
+
+vim.opt.spell = false;
+
+
+--vim.opt.shiftwidth = 2;
+--vim.opt.softtabstop = 2;
+vim.expandtap = true
+vim.cmd(":set expandtab")
+--
+--vim.opt.smarttab = false;
+vim.opt.tabstop = 2;
+--
+--local function e()
+--	print("Hello")
+--end
+--
+--vim.opt.smartindent = true;
+--vim.opt.autoindent = true;
+
+--vim.opt.wrap = false;
+
+vim.opt.termguicolors = true;
+
+vim.opt.scrolloff = 10;
+vim.opt.signcolumn = "no";
+vim.opt.isfname:append("@-@");
+
+vim.opt.updatetime = 50;
+
+--vim.opt.colorcolumn = "80";
+
+-- TROUBLE --
+vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
+vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
+vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
+vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
