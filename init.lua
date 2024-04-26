@@ -198,16 +198,16 @@ require('lazy').setup({
 
   {
     ---- Theme inspired by Atom
-    --'navarasu/onedark.nvim',
-    --priority = 1000,
-    --lazy = false,
-    --config = function()
-    --  require('onedark').setup {
-    --    -- Set a style preset. 'dark' is default.
-    --    style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
-    --  }
-    --  require('onedark').load()
-    --end,
+    'navarasu/onedark.nvim',
+    priority = 1000,
+    lazy = false,
+    config = function()
+      require('onedark').setup {
+        -- Set a style preset. 'dark' is default.
+        style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
+      }
+      require('onedark').load()
+    end,
   },
 
   {
@@ -230,7 +230,9 @@ require('lazy').setup({
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help ibl`
     main = 'ibl',
-    opts = {},
+    opts = {
+      enabled = false,
+    },
   },
 
   -- "gc" to comment visual regions/lines
@@ -284,7 +286,6 @@ require('lazy').setup({
 		end
 	},
 	{ "folke/trouble.nvim" },
-  { "github/copilot.vim" },
   
   -- require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
@@ -585,7 +586,7 @@ local on_attach = function(_, bufnr)
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('<leader>doc', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -701,15 +702,15 @@ cmp.setup {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
+    --['<Tab>'] = cmp.mapping(function(fallback)
+    --  if cmp.visible() then
+    --    cmp.select_next_item()
+    --  elseif luasnip.expand_or_locally_jumpable() then
+    --    luasnip.expand_or_jump()
+    --  else
+    --    fallback()
+    --  end
+    --end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -732,7 +733,7 @@ require("nvim-tree").setup({
 		sorter = "case_sensitive",
 	},
 	view = {
-		width = 25,
+		width = 32,
 	},
 	renderer = {
 		group_empty = true,
@@ -768,14 +769,13 @@ vim.opt.hidden = true;
 
 vim.opt.spell = false;
 
-
---vim.opt.shiftwidth = 2;
 --vim.opt.softtabstop = 2;
 vim.expandtap = true
 vim.cmd(":set expandtab")
 --
 --vim.opt.smarttab = false;
 vim.opt.tabstop = 2;
+vim.opt.shiftwidth = 2;
 --
 --local function e()
 --	print("Hello")
@@ -789,12 +789,12 @@ vim.opt.tabstop = 2;
 vim.opt.termguicolors = true;
 
 vim.opt.scrolloff = 10;
-vim.opt.signcolumn = "no";
 vim.opt.isfname:append("@-@");
 
 vim.opt.updatetime = 50;
 
 --vim.opt.colorcolumn = "80";
+
 
 -- TROUBLE --
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
@@ -804,4 +804,6 @@ vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix
 vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
 vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
 -- The line beneath this is called `modeline`. See `:help modeline`
+
+
 -- vim: ts=2 sts=2 sw=2 et

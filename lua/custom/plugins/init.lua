@@ -4,6 +4,36 @@
 -- See the kickstart.nvim README for more information
 return {
 	{
+		"github/copilot.vim",
+		opts = {},
+		config = function ()
+		end
+	},
+	{
+		'f-person/git-blame.nvim',
+		opts = {},
+		config = function ()
+			require('gitblame').setup {
+				enabled = false,
+			}
+		end
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		opts = {},
+		config = function ()
+			require('treesitter-context').setup {
+				enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+				trim_scope = 'outer',
+				max_lines = 4,
+				multiline_threshold = 1
+			}
+		end
+	},
+	{
+		"AndrewRadev/tagalong.vim"
+	},
+	{
 		'windwp/nvim-autopairs',
 		event = "InsertEnter",
 		opts = {} -- this is equalent to setup({}) function
@@ -37,9 +67,27 @@ return {
 				dim_inactive = false,
 				transparent_mode = false,
 			})
-			vim.cmd("colorscheme gruvbox")
+			--vim.cmd("colorscheme gruvbox")
 		end,
 		opts = ...
+	},
+	{
+		"nvim-ts-autotag",
+		opts = {},
+		config = function()
+			require("nvim-ts-autotag").setup {
+				autotag = {
+					enable = true,
+				}
+			}
+		end
+	},
+	{
+		'brenoprata10/nvim-highlight-colors',
+		opts = {},
+		config = function ()
+			require('nvim-highlight-colors').setup {}
+		end
 	}
 
 }
