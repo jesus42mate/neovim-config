@@ -73,18 +73,6 @@ function _G.copilot_toggle()
 	end
 end
 
--- CODE GENERATOR
-vim.keymap.set("v", "<leader>gen", function()
-	local startpos = vim.fn.getpos("'<")
-	local endpos = vim.fn.getpos("'>")
-	if startpos and endpos then
-		local lines = vim.api.nvim_buf_get_lines(0, startpos[2] - 1, endpos[2], false) vim.cmd("normal d")
-		local text = table.concat(lines, "\n")
-		--vim.api.nvim_buf_set_lines(0, endpos[2], endpos[2], false, {text})
-	end
-	vim.api.nvim_buf_set_lines(0, startpos[1], endpos[2], false, {"nothing"})
-end)
-
 -- FAST HELP (Vertically)
 vim.keymap.set("n", "<leader>al", ":vertical help<CR>");
 
@@ -94,42 +82,38 @@ vim.keymap.set("n", "<leader>h", ":wincmd H<CR>");
 vim.keymap.set("n", "<leader>k", ":wincmd J<CR>");
 vim.keymap.set("n", "<leader>j", ":wincmd K<CR>");
 
--- LOGGIT
+
+-- DEBUGGIT
 local function grabbit()
 	local word = vim.fn.expand("<cword>")
 	return word
 end
 
--- DEBUGGIT
 local function debuggit()
 	local ft = vim.api.nvim_buf_get_option(0, "filetype")  -- get the language of the file
 	local grabbed = grabbit()                              -- get the word under the cursor
-	vim.cmd("normal o ")
+	vim.cmd("normal o ")                                   -- generate an empty line
 
 	if ft ~= nil then
-		--local n = 1
-		--vim.cmd("insert")
-		--while pos[n] ~= nil do
-		--	print(pos[n])
-		--	n = n + 1
-		--end
 		if ft == "lua" then
 			local fmtlog = string.format('normal iprint("%s ->", %s)', grabbed, grabbed)
 			vim.cmd(fmtlog)
-		end
-		if ft == "javascript" then
+		elseif ft == "javascript" then
 			local fmtlog = string.format('normal iconsole.log("%s -> ", %s)', grabbed, grabbed)
 			vim.cmd(fmtlog)
-		end
-		if ft == "typescriptreact" then
+		elseif ft == "typescriptreact" then
 			local fmtlog = string.format('normal iconsole.log("%s -> ", %s)', grabbed, grabbed)
+			vim.cmd(fmtlog)
+		elseif ft == "typescriptreact" then
+			local fmtlog = string.format('normal iconsole.log("%s -> ", %s)', grabbed, grabbed)
+			vim.cmd(fmtlog)
+		elseif ft == "c" then
+			local fmtlog = string.format("normal iprintf(\"%s -> %%c\\n\", %s);", grabbed, grabbed)
 			vim.cmd(fmtlog)
 		end
 	end
 end
 
---vim.keymap.set("n", "<leader>cl", "oconsole.log()")
-vim.keymap.set("n", "<leader>cl", grabbit)
 vim.keymap.set("n", "<leader>cn", debuggit)
 
 -- Keymap to open terminal and execute cargo run

@@ -4,9 +4,49 @@
 -- See the kickstart.nvim README for more information
 return {
 	{
-		"github/copilot.vim",
-		opts = {},
+		'anuvyklack/pretty-fold.nvim',
 		config = function ()
+			require('pretty-fold').setup({
+				keep_indentation = false,
+				fill_char = '•',
+				sections = {
+					left = {
+						'+', function() return string.rep('-', vim.v.foldlevel) end,
+						' ', 'number_of_folded_lines', ':', 'content',
+					}
+				}
+			})
+		end
+	},
+	{
+		'terrortylor/nvim-comment',
+		config = function()
+			require('nvim_comment').setup({
+			-- Linters prefer comment and line to have a space in between markers
+			marker_padding = true,
+			-- should comment out empty or whitespace only lines
+			comment_empty = false,
+			-- trim empty comment whitespace
+			comment_empty_trim_whitespace = true,
+			-- Should key mappings be created
+			create_mappings = true,
+			-- Normal mode mapping left hand side
+			line_mapping = "<leader>d",
+			-- Visual/Operator mapping left hand side
+			operator_mapping = "<leader>da",
+			-- text object mapping, comment chunk,,
+			comment_chunk_text_object = "ic",
+			-- Hook function to call before commenting takes place
+			hook = nil
+		})
+		end
+	},
+	{
+		"github/copilot.vim",
+		opts = {
+		},
+		config = function ()
+			copilot_toggle()
 		end
 	},
 	{
