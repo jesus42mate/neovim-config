@@ -82,7 +82,6 @@ vim.keymap.set("n", "<leader>h", ":wincmd H<CR>");
 vim.keymap.set("n", "<leader>k", ":wincmd J<CR>");
 vim.keymap.set("n", "<leader>j", ":wincmd K<CR>");
 
-
 -- DEBUGGIT
 local function grabbit()
 	local word = vim.fn.expand("<cword>")
@@ -106,6 +105,9 @@ local function debuggit()
 			vim.cmd(fmtlog)
 		elseif ft == "typescriptreact" then
 			local fmtlog = string.format('normal iconsole.log("%s -> ", %s)', grabbed, grabbed)
+			vim.cmd(fmtlog)
+		elseif ft == "go" then
+			local fmtlog = string.format('normal ifmt.Println("%s:", %s)', grabbed, grabbed)
 			vim.cmd(fmtlog)
 		elseif ft == "c" then
 			local fmtlog = string.format("normal iprintf(\"%s -> %%c\\n\", %s);", grabbed, grabbed)

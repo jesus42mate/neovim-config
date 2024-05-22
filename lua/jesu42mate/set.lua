@@ -21,3 +21,5 @@ vim.opt.updatetime = 50;
 --vim.opt.colorcolumn = "80";
 -- COPILOT 
 vim.g.copilot_assume_mapped = true;
+
+vim.api.nvim_set_option("clipboard","unnamed")
