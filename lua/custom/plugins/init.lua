@@ -4,6 +4,12 @@
 -- See the kickstart.nvim README for more information
 return {
 	{
+		'ayu-theme/ayu-vim'
+	},
+	{
+		"cocopon/iceberg.vim"
+	},
+	{
 		'anuvyklack/pretty-fold.nvim',
 		config = function ()
 			require('pretty-fold').setup({

@@ -116,6 +116,9 @@ local function debuggit()
 	end
 end
 
+-- Toggle colorschemes
+vim.keymap.set("n", "<leader>9", ":lua ToggleColorscheme()<CR>")
+
 vim.keymap.set("n", "<leader>cn", debuggit)
 
 -- Keymap to open terminal and execute cargo run

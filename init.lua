@@ -1,5 +1,6 @@
 require("jesu42mate.set")
 require("jesu42mate.remaps")
+require("jesu42mate.colors")
 --[[
 
 =====================================================================
@@ -286,7 +287,6 @@ require('lazy').setup({
 		end
 	},
 	{ "folke/trouble.nvim" },
-  
   -- require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
 
@@ -442,7 +442,6 @@ local function live_grep_git_root()
 end
 
 vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
-
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
@@ -790,6 +789,9 @@ vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix
 vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
 vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
 -- The line beneath this is called `modeline`. See `:help modeline`
+
+
+vim.cmd("colorscheme ayu")
 
 
 -- vim: ts=2 sts=2 sw=2 et
