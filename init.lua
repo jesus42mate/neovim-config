@@ -207,7 +207,7 @@ require('lazy').setup({
         -- Set a style preset. 'dark' is default.
         style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
       }
-      require('onedark').load()
+      --require('onedark').load()
     end,
   },
 
@@ -781,6 +781,7 @@ vim.opt.termguicolors = true;
 vim.opt.isfname:append("@-@");
 --vim.opt.colorcolumn = "80";
 
+
 -- TROUBLE --
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
 vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
@@ -791,7 +792,9 @@ vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references")
 -- The line beneath this is called `modeline`. See `:help modeline`
 
 
-vim.cmd("colorscheme ayu")
+vim.cmd("colorscheme catppuccin-latte")
+--vim.cmd("set guicursor=n-v-c:block-Cursor/lCursor")
+
 
 
 -- vim: ts=2 sts=2 sw=2 et

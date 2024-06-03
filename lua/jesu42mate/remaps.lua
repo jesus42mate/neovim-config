@@ -119,6 +119,9 @@ end
 -- Toggle colorschemes
 vim.keymap.set("n", "<leader>9", ":lua ToggleColorscheme()<CR>")
 
+-- Toggle Dark Mode on or off
+vim.keymap.set("n", "<leader>8", ":lua ToggleDarkMode()<CR>")
+
 vim.keymap.set("n", "<leader>cn", debuggit)
 
 -- Keymap to open terminal and execute cargo run
@@ -130,5 +133,6 @@ vim.keymap.set("n", "<leader>q", ":q<CR>");
 
 -- GitBlame 
 vim.keymap.set("n", "<leader>bl", ":GitBlameToggle<CR>")
+
 
 

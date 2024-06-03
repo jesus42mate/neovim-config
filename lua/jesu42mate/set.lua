@@ -22,4 +22,6 @@ vim.opt.updatetime = 50;
 -- COPILOT 
 vim.g.copilot_assume_mapped = true;
 
+--vim.cmd("colorscheme ayu")
+--vim.cmd("set guicursor=n-v-c:block-Cursor/lCursor")
 vim.api.nvim_set_option("clipboard","unnamed")
