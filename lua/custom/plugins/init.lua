@@ -7,19 +7,20 @@ return {
 	{'ayu-theme/ayu-vim'},
 	{"cocopon/iceberg.vim"},
 	{
-		'anuvyklack/pretty-fold.nvim',
-		config = function ()
-			require('pretty-fold').setup({
-				keep_indentation = false,
-				fill_char = '•',
-				sections = {
-					left = {
-						'+', function() return string.rep('-', vim.v.foldlevel) end,
-						' ', 'number_of_folded_lines', ':', 'content',
-					}
-				}
-			})
-		end
+		-- NOT NECESSARY
+		--'anuvyklack/pretty-fold.nvim',
+		--config = function ()
+		--	require('pretty-fold').setup({
+		--		remove_fold_markers = false,
+		--		fill_char = '•',
+		--		sections = {
+		--			left = {
+		--				'+', function() return string.rep('-', vim.v.foldlevel) end,
+		--				' ', 'number_of_folded_lines', ':', 'content',
+		--			},
+		--		},
+		--	})
+		--end
 	},
 	{
 		'terrortylor/nvim-comment',
@@ -132,5 +133,4 @@ return {
 			require('nvim-highlight-colors').setup {}
 		end
 	}
-
 }
