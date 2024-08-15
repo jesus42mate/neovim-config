@@ -244,6 +244,16 @@ require('lazy').setup({
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
+    config = function()
+      require('telescope').setup{
+        defaults = {
+          file_ignore_patterns = {
+            "node_modules",
+            "package%-lock.json"
+          }
+        }
+      }
+    end,
     dependencies = {
       'nvim-lua/plenary.nvim',
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
@@ -791,6 +801,8 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 -- SETTINGS --
 
+-- CONFORM.NVIM --
+-- CONFORM.NVIM --
 
 -- TROUBLE --
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
@@ -799,9 +811,9 @@ vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document
 vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
 vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
 vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
+-- TROUBLE --
 
 
-vim.cmd("colorscheme catppuccin-latte")
 --vim.cmd("set guicursor=n-v-c:block-Cursor/lCursor")
 
 

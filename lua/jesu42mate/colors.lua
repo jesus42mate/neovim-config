@@ -2,7 +2,7 @@
 local current = 1;
 
 function ToggleColorscheme()
-	local liked = { "gruvbox", "iceberg", "onedark", "ayu", "catppuccin-latte" }
+	local liked = { "eva01", "gruvbox", "onedark", "ayu", "catppuccin-latte" }
 
 	if current > #liked then
 		current = 1;
@@ -22,6 +22,5 @@ function ToggleDarkMode()
 	else
 		vim.o.background = "dark"
 	end
-
 end
 
