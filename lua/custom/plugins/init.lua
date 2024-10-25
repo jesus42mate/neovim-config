@@ -4,6 +4,21 @@
 -- See the kickstart.nvim README for more information
 return {
 	{
+		"zenbones-theme/zenbones.nvim",
+		-- Optionally install Lush. Allows for more configuration or extending the colorscheme
+		-- If you don't want to install lush, make sure to set g:zenbones_compat = 1
+		-- In Vim, compat mode is turned on as Lush only works in Neovim.
+		dependencies = "rktjmp/lush.nvim",
+		lazy = false,
+		priority = 1000,
+		--
+		-- you can set set configuration options here
+		-- config = function()
+		--     vim.g.zenbones_darken_comments = 45
+		--     vim.cmd.colorscheme('zenbones')
+		-- end
+	},
+	{
 		'mfussenegger/nvim-lint',
 		event = {
 			"BufReadPre",
@@ -53,9 +68,9 @@ return {
 		"hachy/eva01.vim",
 		lazy = false,
 		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("eva01")
-		end
+		--config = function()
+		--	vim.cmd.colorscheme("eva01")
+		--end
 	},
 	{ "cocopon/iceberg.vim" },
 	{
@@ -163,7 +178,6 @@ return {
 				dim_inactive = false,
 				transparent_mode = false,
 			})
-			--vim.cmd("colorscheme gruvbox")
 		end,
 		opts = ...
 	},

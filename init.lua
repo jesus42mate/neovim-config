@@ -122,7 +122,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -245,7 +245,7 @@ require('lazy').setup({
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
     config = function()
-      require('telescope').setup{
+      require('telescope').setup {
         defaults = {
           file_ignore_patterns = {
             "node_modules",
@@ -280,24 +280,24 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
   {
-		"ThePrimeagen/harpoon",
-		branch = "harpoon2",
-		requires = {
-			{ "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope.nvim" },
-		}
-	},
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    requires = {
+      { "nvim-lua/plenary.nvim" },
+      { "nvim-telescope/telescope.nvim" },
+    }
+  },
   {
-		"nvim-tree/nvim-tree.lua",
-		dependencies = "nvim-tree/nvim-web-devicons",
-	},
+    "nvim-tree/nvim-tree.lua",
+    dependencies = "nvim-tree/nvim-web-devicons",
+  },
   {
-		"mbbill/undotree",
-		config = function()
-			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle);
-		end
-	},
-	{ "folke/trouble.nvim" },
+    "mbbill/undotree",
+    config = function()
+      vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle);
+    end
+  },
+  { "folke/trouble.nvim" },
   -- require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
 
@@ -309,7 +309,7 @@ require('lazy').setup({
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
 
   -- This is importing what is returned from the lua/custom/init.lua
-  { {{{{import = 'custom.plugins'}}}} },
+  { { { { { import = 'custom.plugins' } } } } },
 }, {})
 
 -- HARPOON --
@@ -443,7 +443,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'php', 'html' },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
@@ -695,48 +695,48 @@ cmp.setup {
 }
 -- NVIM-TREE --
 require("nvim-tree").setup({
-	sort = {
-		sorter = "case_sensitive",
-	},
-	view = {
-		width = 32,
-	},
-	renderer = {
+  sort = {
+    sorter = "case_sensitive",
+  },
+  view = {
+    width = 32,
+  },
+  renderer = {
     highlight_modified = "all",
-		group_empty = true,
-		add_trailing = true,
-		indent_markers = {
-			enable = true,
-		},
-		icons = {
-			web_devicons = {
-				file = {
-					enable = true,
-				},
-			},
-			show = {
-				folder_arrow = false,
-			},
+    group_empty = true,
+    add_trailing = true,
+    indent_markers = {
+      enable = true,
+    },
+    icons = {
+      web_devicons = {
+        file = {
+          enable = true,
+        },
+      },
+      show = {
+        folder_arrow = false,
+      },
 
-		}
-	},
-	filters = {
-		dotfiles = false,
-	},
-	git = {
-		enable = true,
-	}
+    }
+  },
+  filters = {
+    dotfiles = false,
+  },
+  git = {
+    enable = true,
+  }
 })
 
-vim.api.nvim_create_autocmd({"BufWinLeave"}, {
-  pattern = {"*.*"},
+vim.api.nvim_create_autocmd({ "BufWinLeave" }, {
+  pattern = { "*.*" },
   desc = "save the view (folds) for the current buffer on close.",
   command = "mkview"
 
 })
 
-vim.api.nvim_create_autocmd({"BufWinEnter"}, {
-  pattern = {"*.*"},
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+  pattern = { "*.*" },
   desc = "load the view (folds) for the current buffer on opening.",
   command = "silent! loadview"
 })
@@ -801,8 +801,6 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 -- SETTINGS --
 
--- CONFORM.NVIM --
--- CONFORM.NVIM --
 
 -- TROUBLE --
 vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
@@ -813,6 +811,7 @@ vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist"
 vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
 -- TROUBLE --
 
+vim.cmd("colorscheme zenburned");
 
 --vim.cmd("set guicursor=n-v-c:block-Cursor/lCursor")
 
